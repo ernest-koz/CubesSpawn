@@ -8,24 +8,26 @@ public class CubeSpawner : MonoBehaviour
     private const float SpawnHeightMin = 2f;
     private const float SpawnHeightMax = 4f;
 
-    [SerializeField] private Cube _cubePrefab;
+    [SerializeField] private CubeFactory _cubeFactory;
 
     private void Start()
     {
-        if (_cubePrefab == null)
+        if (_cubeFactory == null)
+        {
+            Debug.LogError($"CubeFactory is not assigned on {gameObject.name}", gameObject);
             return;
+        }
 
-        int cubesCount = UnityEngine.Random.Range(MinSpawnCount, MaxSpawnCountExclusive);
+        int cubesCount = Random.Range(MinSpawnCount, MaxSpawnCountExclusive);
 
         for (int i = 0; i < cubesCount; i++)
         {
             Vector3 spawnPosition = new Vector3(
-                UnityEngine.Random.Range(-SpawnRangeHorizontal, SpawnRangeHorizontal),
-                UnityEngine.Random.Range(SpawnHeightMin, SpawnHeightMax),
-                UnityEngine.Random.Range(-SpawnRangeHorizontal, SpawnRangeHorizontal));
+                Random.Range(-SpawnRangeHorizontal, SpawnRangeHorizontal),
+                Random.Range(SpawnHeightMin, SpawnHeightMax),
+                Random.Range(-SpawnRangeHorizontal, SpawnRangeHorizontal));
 
-            Cube cube = Instantiate(_cubePrefab, spawnPosition, UnityEngine.Random.rotation);
-            cube.Initialize(Vector3.one, CubeSplitChance.InitialSplitChance);
+            _cubeFactory.Create(spawnPosition, Random.rotation, Vector3.one, CubeSplitChance.InitialSplitChance);
         }
     }
 }

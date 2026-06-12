@@ -1,7 +1,4 @@
-using System;
 using UnityEngine;
-
-[RequireComponent(typeof(CubeClickInput))]
 
 public class CubeSplitChance : MonoBehaviour
 {
@@ -10,41 +7,11 @@ public class CubeSplitChance : MonoBehaviour
 
     [SerializeField] private float _currentSplitChance = InitialSplitChance;
 
-    private CubeClickInput _input;
-
-    public event Action<float> SplitSucceeded;
-    public event Action SplitFailed;
-
-    private void Awake()
-    {
-        _input = GetComponent<CubeClickInput>();
-    }
-
-    private void OnEnable()
-    {
-        _input.Clicked += CheckSplit;
-    }
-
-    private void OnDisable()
-    {
-        _input.Clicked -= CheckSplit;
-    }
+    public bool CanSplit => Random.value <= _currentSplitChance;
+    public float NextChance => _currentSplitChance / ChanceReductionFactor;
 
     public void Initialize(float splitChance)
     {
         _currentSplitChance = splitChance;
-    }
-
-    private void CheckSplit()
-    {
-        if (UnityEngine.Random.value <= _currentSplitChance)
-        {
-            float nextSplitChance = _currentSplitChance / ChanceReductionFactor;
-            SplitSucceeded?.Invoke(nextSplitChance);
-        }
-        else
-        {
-            SplitFailed?.Invoke();
-        }
     }
 }

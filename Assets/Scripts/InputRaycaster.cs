@@ -1,0 +1,22 @@
+using UnityEngine;
+
+public class InputRaycaster : MonoBehaviour
+{
+    [SerializeField] private LayerMask _cubeLayer = -1;
+
+    private void Update()
+    {
+        if (Input.GetMouseButtonDown(0) == false)
+            return;
+
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+        if (Physics.Raycast(ray, out RaycastHit hit, float.MaxValue, _cubeLayer))
+        {
+            if (hit.collider.TryGetComponent(out IClickable clickable))
+            {
+                clickable.HandleClick();
+            }
+        }
+    }
+}
