@@ -11,6 +11,10 @@ public class Cube : MonoBehaviour, IClickable
     public bool CubeCanSplit => Random.value <= _currentSplitChance;
     public float CubeSplitNextChance => _currentSplitChance / ChanceReductionFactor;
 
+    public void HandleClick()
+    {
+    }
+
     public void Initialize(Vector3 scale, float splitChance)
     {
         transform.localScale = scale;
