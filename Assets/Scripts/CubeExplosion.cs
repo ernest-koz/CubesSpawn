@@ -1,0 +1,57 @@
+using UnityEngine;
+
+public class CubeExplosion : MonoBehaviour
+{
+    [SerializeField] private float _baseForce = 10f;
+    [SerializeField] private float _baseRadius = 5f;
+    [SerializeField] private float _upwardsModifier = 0.3f;
+    [SerializeField] private LayerMask _cubeLayer = -1;
+    [SerializeField] private ParticleSystem _explosionEffectPrefab;
+
+    public void Explode()
+    {
+        PlayEffect();
+
+        float sizeMultiplier = 1f / transform.localScale.x;
+        float force = _baseForce * sizeMultiplier;
+        float radius = _baseRadius * sizeMultiplier;
+
+        Collider[] hits = Physics.OverlapSphere(transform.position, radius, _cubeLayer);
+
+        foreach (Collider hit in hits)
+        {
+            if (hit.attachedRigidbody == null)
+                continue;
+
+            if (hit.gameObject == gameObject)
+                continue;
+
+            hit.attachedRigidbody.AddExplosionForce(
+                force,
+                transform.position,
+                radius,
+                _upwardsModifier,
+                ForceMode.Impulse);
+        }
+    }
+
+    private void PlayEffect()
+    {
+        if (_explosionEffectPrefab == null)
+            return;
+
+        ParticleSystem effect = Instantiate(
+            _explosionEffectPrefab,
+            transform.position,
+            Quaternion.identity);
+
+        ParticleSystem.MainModule main = effect.main;
+        float duration = main.duration;
+        float maxLifetime = main.startLifetime.mode == ParticleSystemCurveMode.Constant
+            ? main.startLifetime.constant
+            : main.startLifetime.constantMax;
+
+        effect.Play();
+        Destroy(effect.gameObject, duration + maxLifetime);
+    }
+}

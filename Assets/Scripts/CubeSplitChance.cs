@@ -5,14 +5,12 @@ using UnityEngine;
 
 public class CubeSplitChance : MonoBehaviour
 {
-    private const float InitialSplitChance = 1f;
+    public const float InitialSplitChance = 1f;
     private const float ChanceReductionFactor = 2f;
 
     [SerializeField] private float _currentSplitChance = InitialSplitChance;
 
     private CubeClickInput _input;
-
-    public float CurrentSplitChance => _currentSplitChance;
 
     public event Action<float> SplitSucceeded;
     public event Action SplitFailed;
@@ -39,9 +37,7 @@ public class CubeSplitChance : MonoBehaviour
 
     private void CheckSplit()
     {
-        float roll = UnityEngine.Random.value;
-
-        if (roll <= _currentSplitChance)
+        if (UnityEngine.Random.value <= _currentSplitChance)
         {
             float nextSplitChance = _currentSplitChance / ChanceReductionFactor;
             SplitSucceeded?.Invoke(nextSplitChance);
