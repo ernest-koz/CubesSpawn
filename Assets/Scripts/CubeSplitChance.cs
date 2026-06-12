@@ -7,8 +7,8 @@ public class CubeSplitChance : MonoBehaviour
 
     [SerializeField] private float _currentSplitChance = InitialSplitChance;
 
-    public bool CanSplit => Random.value <= _currentSplitChance;
-    public float NextChance => _currentSplitChance / ChanceReductionFactor;
+    public bool CubeCanSplit => Random.value <= _currentSplitChance;
+    public float CubeSplitNextChance => _currentSplitChance / ChanceReductionFactor;
 
     public void Initialize(float splitChance)
     {

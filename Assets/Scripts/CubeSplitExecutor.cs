@@ -27,7 +27,7 @@ public class CubeSplitExecutor : MonoBehaviour, IClickable
 
         _isProcessing = true;
 
-        if (_splitChance.CanSplit)
+        if (_splitChance.CubeCanSplit)
         {
             if (_cubeFactory == null)
             {
@@ -35,7 +35,7 @@ public class CubeSplitExecutor : MonoBehaviour, IClickable
                 return;
             }
 
-            _cubeFactory.SpawnSplit(transform.position, transform.localScale, _splitChance.NextChance);
+            _cubeFactory.SpawnSplit(transform.position, transform.localScale, _splitChance.CubeSplitNextChance);
         }
         else
         {
