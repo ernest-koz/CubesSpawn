@@ -132,6 +132,8 @@ GameObject:
   m_Component:
   - component: {fileID: 205154128}
   - component: {fileID: 205154127}
+  - component: {fileID: 205154130}
+  - component: {fileID: 205154129}
   m_Layer: 0
   m_Name: CubeFactory
   m_TagString: Untagged
@@ -152,6 +154,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _cubePrefab: {fileID: -5364200660992188894, guid: 62ec91c36bf1c8f44b4c5a0e14292311, type: 3}
+  _minSplitCubes: 2
+  _maxSplitCubesExclusive: 7
+  _scaleReductionFactor: 2
+  _splitYOffsetMin: 0.5
+  _splitYOffsetMax: 1.5
 --- !u!4 &205154128
 Transform:
   m_ObjectHideFlags: 0
@@ -167,6 +174,40 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &205154129
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 205154126}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa3a615468125d746a776b84071daad7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _inputRaycaster: {fileID: 963194229}
+  _cubeFactory: {fileID: 205154127}
+  _cubeExplosion: {fileID: 205154130}
+--- !u!114 &205154130
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 205154126}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0968325716e6d184e809a777194c452f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _baseForce: 10
+  _baseRadius: 5
+  _upwardsModifier: 0.3
+  _cubeLayer:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  _explosionEffectPrefab: {fileID: 8030369201239111677, guid: b79e3d6d6b23d6e4eb59a0c45c161c63, type: 3}
 --- !u!1 &416268630
 GameObject:
   m_ObjectHideFlags: 0
@@ -634,7 +675,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-
 --- !u!1 &1806387996
 GameObject:
   m_ObjectHideFlags: 0
@@ -665,6 +705,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _cubeFactory: {fileID: 205154127}
+  _minSpawnCount: 2
+  _maxSpawnCountExclusive: 7
+  _spawnRangeHorizontal: 3
+  _spawnHeightMin: 2
+  _spawnHeightMax: 4
 --- !u!4 &1806387998
 Transform:
   m_ObjectHideFlags: 0
@@ -791,9 +836,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
+    m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 62ec91c36bf1c8f44b4c5a0e14292311, type: 3}
-
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

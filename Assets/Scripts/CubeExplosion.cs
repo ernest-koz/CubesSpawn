@@ -12,7 +12,7 @@ public class CubeExplosion : MonoBehaviour
     {
         PlayEffectAt(position);
 
-        float sizeMultiplier = 1f / scale.x;
+        float sizeMultiplier = 1f / Mathf.Max(scale.x, scale.y, scale.z);
         float force = _baseForce * sizeMultiplier;
         float radius = _baseRadius * sizeMultiplier;
 
@@ -35,11 +35,7 @@ public class CubeExplosion : MonoBehaviour
         ParticleSystem effect = Instantiate(_explosionEffectPrefab, position, Quaternion.identity);
 
         ParticleSystem.MainModule main = effect.main;
-        float totalDuration = main.duration;
-
-        totalDuration += main.startLifetime.mode == ParticleSystemCurveMode.Constant
-            ? main.startLifetime.constant
-            : main.startLifetime.constantMax;
+        float totalDuration = main.duration + main.startLifetime.constantMax;
 
         effect.Play();
         Destroy(effect.gameObject, totalDuration);

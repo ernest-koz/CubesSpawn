@@ -8,11 +8,20 @@ public class CubeSplitExecutor : MonoBehaviour
 
     private void OnEnable()
     {
+        if (_inputRaycaster == null)
+        {
+            Debug.LogError($"InputRaycaster is not assigned on {gameObject.name}", gameObject);
+            return;
+        }
+
         _inputRaycaster.ClickableClicked += OnClickableClicked;
     }
 
     private void OnDisable()
     {
+        if (_inputRaycaster == null)
+            return;
+
         _inputRaycaster.ClickableClicked -= OnClickableClicked;
     }
 
@@ -21,9 +30,9 @@ public class CubeSplitExecutor : MonoBehaviour
         if (clickable is not Cube cube)
             return;
 
-        if (cube.CubeCanSplit)
+        if (cube.CanSplit)
         {
-            _cubeFactory.SpawnSplit(cube.transform.position, cube.transform.localScale, cube.CubeSplitNextChance);
+            _cubeFactory.SpawnSplit(cube.transform.position, cube.transform.localScale, cube.NextSplitChance);
         }
         else
         {
