@@ -8,50 +8,40 @@ public class CubeExplosion : MonoBehaviour
     [SerializeField] private LayerMask _cubeLayer = -1;
     [SerializeField] private ParticleSystem _explosionEffectPrefab;
 
-    public void Explode()
+    public void Explode(Vector3 position, Vector3 scale)
     {
-        PlayEffect();
+        PlayEffectAt(position);
 
-        float sizeMultiplier = 1f / transform.localScale.x;
+        float sizeMultiplier = 1f / scale.x;
         float force = _baseForce * sizeMultiplier;
         float radius = _baseRadius * sizeMultiplier;
 
-        Collider[] hits = Physics.OverlapSphere(transform.position, radius, _cubeLayer);
+        Collider[] hits = Physics.OverlapSphere(position, radius, _cubeLayer);
 
         foreach (Collider hit in hits)
         {
             if (hit.attachedRigidbody == null)
                 continue;
 
-            if (hit.gameObject == gameObject)
-                continue;
-
-            hit.attachedRigidbody.AddExplosionForce(
-                force,
-                transform.position,
-                radius,
-                _upwardsModifier,
-                ForceMode.Impulse);
+            hit.attachedRigidbody.AddExplosionForce(force, position, radius, _upwardsModifier, ForceMode.Impulse);
         }
     }
 
-    private void PlayEffect()
+    private void PlayEffectAt(Vector3 position)
     {
         if (_explosionEffectPrefab == null)
             return;
 
-        ParticleSystem effect = Instantiate(
-            _explosionEffectPrefab,
-            transform.position,
-            Quaternion.identity);
+        ParticleSystem effect = Instantiate(_explosionEffectPrefab, position, Quaternion.identity);
 
         ParticleSystem.MainModule main = effect.main;
-        float duration = main.duration;
-        float maxLifetime = main.startLifetime.mode == ParticleSystemCurveMode.Constant
+        float totalDuration = main.duration;
+
+        totalDuration += main.startLifetime.mode == ParticleSystemCurveMode.Constant
             ? main.startLifetime.constant
             : main.startLifetime.constantMax;
 
         effect.Play();
-        Destroy(effect.gameObject, duration + maxLifetime);
+        Destroy(effect.gameObject, totalDuration);
     }
 }

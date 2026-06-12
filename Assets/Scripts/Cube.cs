@@ -1,23 +1,20 @@
 using UnityEngine;
 
-[RequireComponent(typeof(CubeSplitChance))]
 [RequireComponent(typeof(Renderer))]
-public class Cube : MonoBehaviour
+public class Cube : MonoBehaviour, IClickable
 {
-    private CubeSplitChance _splitChance;
-    private Renderer _renderer;
+    public const float InitialSplitChance = 1f;
+    private const float ChanceReductionFactor = 2f;
 
-    private void Awake()
-    {
-        _splitChance = GetComponent<CubeSplitChance>();
-        _renderer = GetComponent<Renderer>();
-    }
+    [SerializeField] private float _currentSplitChance = InitialSplitChance;
+
+    public bool CubeCanSplit => Random.value <= _currentSplitChance;
+    public float CubeSplitNextChance => _currentSplitChance / ChanceReductionFactor;
 
     public void Initialize(Vector3 scale, float splitChance)
     {
         transform.localScale = scale;
-        _splitChance.Initialize(splitChance);
-        Color randomColor = Random.ColorHSV(0f, 1f, 0.5f, 1f, 0.5f, 1f, 1f, 1f);
-        _renderer.material.color = randomColor;
+        _currentSplitChance = splitChance;
+        GetComponent<Renderer>().material.color = Random.ColorHSV(0f, 1f, 0.5f, 1f, 0.5f, 1f, 1f, 1f);
     }
 }

@@ -13,9 +13,6 @@ GameObject:
   - component: {fileID: 2458823980654578702}
   - component: {fileID: 7867080691178990655}
   - component: {fileID: 6391565628862992567}
-  - component: {fileID: 5659688686118527886}
-  - component: {fileID: 5172322817339500554}
-  - component: {fileID: 2948728746216838976}
   - component: {fileID: -5364200660992188894}
   m_Layer: 0
   m_Name: Cube
@@ -137,50 +134,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &5659688686118527886
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4713016910409885002}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 15a05acc05af02a4fb8f184946f259f9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _currentSplitChance: 1
---- !u!114 &5172322817339500554
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4713016910409885002}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fa3a615468125d746a776b84071daad7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &2948728746216838976
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4713016910409885002}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0968325716e6d184e809a777194c452f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _baseForce: 10
-  _baseRadius: 5
-  _upwardsModifier: 0.3
-  _cubeLayer:
-    serializedVersion: 2
-    m_Bits: 1
-  _explosionEffectPrefab: {fileID: 8030369201239111677, guid: b79e3d6d6b23d6e4eb59a0c45c161c63, type: 3}
 --- !u!114 &-5364200660992188894
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -193,3 +146,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ef9994bd3e710744bbb3fac4e248270, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _currentSplitChance: 1

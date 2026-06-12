@@ -1,47 +1,35 @@
 using UnityEngine;
 
-[RequireComponent(typeof(CubeSplitChance))]
-[RequireComponent(typeof(CubeExplosion))]
-public class CubeSplitExecutor : MonoBehaviour, IClickable
+public class CubeSplitExecutor : MonoBehaviour
 {
-    private CubeSplitChance _splitChance;
-    private CubeExplosion _explosion;
-    private CubeFactory _cubeFactory;
-    private bool _isProcessing;
+    [SerializeField] private InputRaycaster _inputRaycaster;
+    [SerializeField] private CubeFactory _cubeFactory;
+    [SerializeField] private CubeExplosion _cubeExplosion;
 
-    private void Awake()
+    private void OnEnable()
     {
-        _splitChance = GetComponent<CubeSplitChance>();
-        _explosion = GetComponent<CubeExplosion>();
+        _inputRaycaster.ClickableClicked += OnClickableClicked;
     }
 
-    private void Start()
+    private void OnDisable()
     {
-        _cubeFactory = FindObjectOfType<CubeFactory>();
+        _inputRaycaster.ClickableClicked -= OnClickableClicked;
     }
 
-    public void HandleClick()
+    private void OnClickableClicked(IClickable clickable)
     {
-        if (_isProcessing)
+        if (clickable is not Cube cube)
             return;
 
-        _isProcessing = true;
-
-        if (_splitChance.CubeCanSplit)
+        if (cube.CubeCanSplit)
         {
-            if (_cubeFactory == null)
-            {
-                Debug.LogError($"CubeFactory not found in scene!", gameObject);
-                return;
-            }
-
-            _cubeFactory.SpawnSplit(transform.position, transform.localScale, _splitChance.CubeSplitNextChance);
+            _cubeFactory.SpawnSplit(cube.transform.position, cube.transform.localScale, cube.CubeSplitNextChance);
         }
         else
         {
-            _explosion.Explode();
+            _cubeExplosion.Explode(cube.transform.position, cube.transform.localScale);
         }
 
-        Destroy(gameObject);
+        Destroy(cube.gameObject);
     }
 }

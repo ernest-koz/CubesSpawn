@@ -1,7 +1,10 @@
+using System;
 using UnityEngine;
 
 public class InputRaycaster : MonoBehaviour
 {
+    public event Action<IClickable> ClickableClicked;
+
     [SerializeField] private LayerMask _cubeLayer = -1;
 
     private void Update()
@@ -15,7 +18,7 @@ public class InputRaycaster : MonoBehaviour
         {
             if (hit.collider.TryGetComponent(out IClickable clickable))
             {
-                clickable.HandleClick();
+                ClickableClicked?.Invoke(clickable);
             }
         }
     }

@@ -27,7 +27,7 @@ public class CubeSpawner : MonoBehaviour
                 Random.Range(SpawnHeightMin, SpawnHeightMax),
                 Random.Range(-SpawnRangeHorizontal, SpawnRangeHorizontal));
 
-            _cubeFactory.Create(spawnPosition, Random.rotation, Vector3.one, CubeSplitChance.InitialSplitChance);
+            _cubeFactory.Create(spawnPosition, Random.rotation, Vector3.one, Cube.InitialSplitChance);
         }
     }
 }
